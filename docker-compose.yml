@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mysql:5.7.41
+    networks: 
+        - trello-clone-backend_default
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=toor
+    volumes:
+      - new-sql-store:/var/lib/mysql
+
+  backend:
+    image: trello-backend 
+    ports:
+      - "5000:5000"
+    networks: 
+      - trello-clone-backend_default
+    depends_on:
+      - db
+
+networks:
+  trello-clone-backend_default:
+    external:
+      name: trello-clone-backend_default
+
+volumes:
+  new-sql-store:
